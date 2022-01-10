@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/CrackedMinecraftClub/DiscordBot/issues"
   },
-  "homepage": "https://github.com/CrackedMinecraftClub/DiscordBot#readme"
+  "homepage": "https://github.com/CrackedMinecraftClub/DiscordBot#readme",
+  "dependencies": {
+    "discord.js": "^13.5.1"
+  }
 }
