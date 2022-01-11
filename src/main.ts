@@ -30,7 +30,7 @@ client.on('ready', async () => {
         typeScript: true,
         commandDir: path.join(__dirname, 'commands'),
         featureDir: path.join(__dirname, 'events'),
-        botOwners: ['787977601976631336', '563354238156275712'],
+        botOwners: ['787977601976631336', '563354238156275712', '839838899432849428'],
         delErrMsgCooldown: 2,
         ephemeral: false,
         testServers: ['929950822857584650'],
