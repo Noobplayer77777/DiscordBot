@@ -13,8 +13,9 @@
 // limitations under the License.
 
 import { ICommand } from "wokcommands";
-import { MessageActionRow, User } from "discord.js";
+import { MessageActionRow, MessageEmbed, User } from "discord.js";
 import Schemas from "../../database/mongo/schemas/punishment";
+import punishment from "../../database/mongo/schemas/punishment";
 
 export default {
   category: "Moderation",
@@ -37,14 +38,86 @@ export default {
 
     let userId = args.shift()!;
     const duration = args.shift()!;
-    const reason = args.join(' ');
+    const reason = args.join(" ");
 
-    let user: User | undefined
+    let user: User | undefined;
 
     if (message) {
-    user = message.mentions.users.first();
+      user = message.mentions.users.first();
     } else {
-    user = interaction.options.getUser('user') as User;
+      user = interaction.options.getUser("user") as User;
     }
-  },
+
+    if (!user) {
+      userId = userId.replace(/[<@!>]/g, "");
+      user = await client.users.fetch(userId);
+
+      if (!user) {
+        return "The User Doesnt Exist With the Id of" + userId;
+      }
+    }
+
+    userId = user.id;
+
+    let time;
+    let type;
+
+    try {
+      const split = duration.match(/\d+|\D+/g);
+      time = parseInt(split![0]);
+      type = split![1].toLocaleLowerCase();
+    } catch (e) {
+      return "Invalid Time Format Use h // d // m";
+    }
+
+    if (type === "h") {
+      time *= 60;
+    } else if (type === "d") {
+      time *= 60 * 24;
+    } else if (type !== "m") {
+      return "Invalid Time Format use h // d // m";
+    }
+
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes() + time);
+
+    const result = await punishment.findOne({
+      userId,
+      type: "mute",
+    });
+
+    if (result) return `<@${userId}> is already muted`;
+
+    try {
+      const member = await guild.members.fetch(userId);
+      const embed = new MessageEmbed()
+        .setAuthor({ name: staff.nickname, iconURL: staff.avatarURL() })
+        .setColor("DARK_RED")
+        .setDescription(
+          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ${duration} `
+        );
+      member.send({ embeds: [embed] });
+
+      if (member) {
+        const muterole = guild.roles.cache.find(
+          (role) => role.name === "Muted"
+        );
+
+        member.roles.add(muterole);
+      }
+
+      await new Schemas({
+        userId,
+        staffId: staff.id,
+        reason,
+        expires,
+        type: "mute",
+      });
+    } catch (ignored) {
+      return "Cannot mute that user";
+    }
+
+
+    return `<@${userId} has been muted for ${duration}`
+    },
 } as ICommand;
