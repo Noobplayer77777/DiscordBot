@@ -19,7 +19,7 @@ import punishment from "../../database/mongo/schemas/punishment";
 
 export default {
   category: "Moderation",
-  description: "Helps in making someone You know Stop talking completly",
+  description: "Helps in making someone be erased from reality",
   permissions: ["BAN_MEMBERS"],
   minArgs: 3,
   expectedArgs: "<user> <duration> <reason>",
@@ -53,7 +53,7 @@ export default {
       user = await client.users.fetch(userId);
 
       if (!user) {
-        return "The User Doesnt Exist With the Id of" + userId;
+        return "The User Doesnt Exist With the Id of " + userId;
       }
     }
 
@@ -83,10 +83,10 @@ export default {
 
     const result = await punishment.findOne({
       userId,
-      type: "mute",
+      type: "ban",
     });
 
-    if (result) return `<@${userId}> is already muted`;
+    if (result) return `<@${userId}> is already banned`;
 
     try {
       const member = await guild.members.fetch(userId);
@@ -95,17 +95,15 @@ export default {
           name: staff.displayName,
           iconURL: staff.displayAvatarURL(),
         })
-        .setColor("DARK_RED")
+        .setTitle(`Bammed`)
+        .setColor('DARK_BUT_NOT_BLACK')
         .setDescription(
           `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ${duration} `
         );
       member.send({ embeds: [embed] });
 
       if (member) {
-        const muterole = await guild.roles.fetch("929950822865965102");
-        if (muterole) {
-          await member.roles.add(muterole);
-        }
+        member.ban({ days: 7, reason: reason })
       }
 
       await new Schemas({
@@ -113,12 +111,12 @@ export default {
         staffId: staff.id,
         reason,
         expires,
-        type: "mute",
+        type: "ban",
       }).save();
     } catch (err) {
       throw err;
     }
 
-    return `<@${userId}> has been muted for ${duration}`;
+    return `<@${userId}> has been banned for ${duration}`;
   },
 } as ICommand;
