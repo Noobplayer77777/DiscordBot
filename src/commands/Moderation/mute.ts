@@ -91,7 +91,10 @@ export default {
     try {
       const member = await guild.members.fetch(userId);
       const embed = new MessageEmbed()
-        .setAuthor({ name: staff.nickname, iconURL: staff.avatarURL() })
+        .setAuthor({
+          name: staff.displayName,
+          iconURL: staff.displayAvatarURL(),
+        })
         .setColor("DARK_RED")
         .setDescription(
           `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ${duration} `
@@ -99,11 +102,10 @@ export default {
       member.send({ embeds: [embed] });
 
       if (member) {
-        const muterole = guild.roles.cache.find(
-          (role) => role.name === "Muted"
-        );
-
-        member.roles.add(muterole);
+        const muterole = await guild.roles.fetch("929950822865965102");
+        if (muterole) {
+          await member.roles.add(muterole);
+        }
       }
 
       await new Schemas({
@@ -112,12 +114,11 @@ export default {
         reason,
         expires,
         type: "mute",
-      });
-    } catch (ignored) {
-      return "Cannot mute that user";
+      }).save();
+    } catch (err) {
+      throw err;
     }
 
-
-    return `<@${userId} has been muted for ${duration}`
-    },
+    return `<@${userId}> has been muted for ${duration}`;
+  },
 } as ICommand;

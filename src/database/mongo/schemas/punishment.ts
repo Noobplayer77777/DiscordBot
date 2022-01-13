@@ -35,4 +35,4 @@ const schema = new Schema({
 
 const name = 'Punishments';
 
-export default mongoose.model[name] || mongoose.model(name, schema);
+export default mongoose.model(name, schema);

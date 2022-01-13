@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Client } from "discord.js";
+import { Client, MessageEmbed, Role } from "discord.js";
 import schema from "../../src/database/mongo/schemas/punishment";
 
 export default (client: Client) => {
@@ -24,9 +24,9 @@ export default (client: Client) => {
 
     if (result) {
       const mutedRole = member.guild.roles.cache.find(
-        (role) => role.name === "Muted"
-      );
-      member.roles.add(mutedRole);
+        (role) => role.name === "Muted"!
+      ) as Role;
+      member.roles.add(mutedRole)!;
     }
   });
 
@@ -44,17 +44,32 @@ export default (client: Client) => {
         "929950822857584650"
       ); /** Will be Changed Later to bots guild this is test servers id not Cmcs */
 
-      if (type === 'ban') {
-          guild.members.unban(userId, 'Ban Expired')
-      } else if (type === ' mute') {
-          const muterole = guild.roles.cache.find((role) => role.name === 'Muted') 
-          const member = guild.members.cache.get(userId);
-          if (!member) continue;
-          member.roles.remove(muterole)
+      if (type === "ban") {
+        guild.members.unban(userId, "Ban Expired");
+      } else if (type === "mute") {
+        const muterole = guild.roles.cache.find(
+          (role) => role.name === "Muted"
+        ) as Role;
+        const member = guild.members.cache.get(userId);
+        if (!member) continue;
+        member.roles.remove(muterole);
+        const embed = new MessageEmbed()
+          .setTitle("Your Mute Has Expired")
+          .setAuthor({ name: `Cracked Minecraft Club` })
+          .setDescription(
+            `Hello ${member.displayName} , Your Mute In Cracked Minecraft Club Discord Server Has Expired \n Your Now free to chat in our server but please Try to always maintain the rules `
+          )
+          .setColor("GREEN")
+          .setTimestamp();
+        try {
+          member.send({ embeds: [embed] });
+        } catch (err) {
+          continue;
+        }
       }
     }
 
-    await schema.deleteMany(query)
+    await schema.deleteMany(query);
     setTimeout(check, 1000 * 60);
   };
   check();
