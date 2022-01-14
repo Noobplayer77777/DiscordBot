@@ -67,7 +67,7 @@ export default {
       time = parseInt(split![0]);
       type = split![1].toLocaleLowerCase();
     } catch (e) {
-      return "Invalid Time Format Use h // d // m";
+      return "Invalid Time Format Use h // d // m // perm for hours , days , minutes , permenently respectivly ";
     }
 
     if (type === "h") {
@@ -96,23 +96,27 @@ export default {
           iconURL: staff.displayAvatarURL(),
         })
         .setTitle(`Bammed`)
-        .setColor('DARK_BUT_NOT_BLACK')
+        .setColor("DARK_BUT_NOT_BLACK")
         .setDescription(
-          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ${duration} `
+          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ` + type ===
+            "perm"
+            ? `Perm`
+            : duration
         );
       member.send({ embeds: [embed] });
 
       if (member) {
-        member.ban({ days: 7, reason: reason })
+        member.ban({ days: 7, reason: reason });
       }
-
-      await new Schemas({
-        userId,
-        staffId: staff.id,
-        reason,
-        expires,
-        type: "ban",
-      }).save();
+      if (type !== "perm") {
+        await new Schemas({
+          userId,
+          staffId: staff.id,
+          reason,
+          expires,
+          type: "ban",
+        }).save();
+      }
     } catch (err) {
       throw err;
     }
