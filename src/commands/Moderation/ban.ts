@@ -104,34 +104,32 @@ export default {
         .setTitle(`Banned`)
         .setColor("RED")
         .setDescription(
-          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ` + (perm
-            ? `Permenent`
-            : duration)
+          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ` +
+            (perm ? `Permenent` : duration)
         )
         .setImage(`https://i.imgur.com/OIvqxNK.png`)
-        .setThumbnail(`https://cdn.discordapp.com/icons/807616952650301440/684b714914eed2de259448fe01f53dde.png?size=4096`)
+        .setThumbnail(
+          `https://cdn.discordapp.com/icons/807616952650301440/684b714914eed2de259448fe01f53dde.png?size=4096`
+        );
 
-     await member.send({ embeds: [embed] });
+      await member.send({ embeds: [embed] });
       if (message) {
         if (perm === "true") {
           if (member) {
             member.ban({ days: 7, reason: reason });
           }
         } else {
-            await new Schemas({
-              userId,
-              staffId: staff.id,
-              reason,
-              expires,
-              type: "ban",
-            }).save();
+          await new Schemas({
+            userId,
+            staffId: staff.id,
+            reason,
+            expires,
+            type: "ban",
+          }).save();
 
-            member.ban({ days: 7, reason: reason });
-            
-          
+          member.ban({ days: 7, reason: reason });
         }
       } else {
-        
         if (perm) {
           member.ban({ days: 7, reason: reason });
         } else {
@@ -145,7 +143,6 @@ export default {
 
           member.ban({ days: 7, reason: reason });
         }
-
       }
     } catch (err) {
       throw err;
