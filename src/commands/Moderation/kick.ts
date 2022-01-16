@@ -44,6 +44,7 @@ export default {
     try {
       if (!guild) return;
       const member = await guild.members?.fetch(user.id)!;
+      if (!member.kickable) return 'Cant kick this user due to permission reasons'
       member.kick(reason);
     } catch (err) {
       return "Cant Kick that user!";

@@ -93,6 +93,7 @@ export default {
 
     try {
       const member = await guild.members.fetch(userId)!;
+      if (!member.kickable) return 'Cant ban this user due to permission reasons'
       if (!member) {
         return "`Cant Fetch The User as a GuildMember`";
       }
