@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MessageEmbed, User } from "discord.js";
+import { Message, MessageEmbed, TextChannel, User } from "discord.js";
 import { ICommand } from "wokcommands";
 
 export default {
@@ -24,8 +24,10 @@ export default {
   slash: "both",
   testOnly: true,
   callback: async ({ message, interaction, args, client, member }) => {
-    let users = args.shift()!;
+    let users = args.shift()! as string;
+    if (!users) return 'No user is defined'
     const messages = args.join(" ");
+    if (args.includes("@everyone" || "@here")) return;
 
     let user: User | undefined;
 
@@ -49,12 +51,12 @@ export default {
     if (message) {
       let embed = new MessageEmbed()
         .setTitle(`There is a message from staff of CMC`)
-        .setAuthor({ name: message.author.username })
+        .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
         .setDescription(`Message \n ` + "`" + messages + "`")
         .setColor("BLURPLE")
         .setTimestamp();
 
-      user
+     await user
         .send({ embeds: [embed] })
         .catch(() => {
           return "Cant Dm that user";
@@ -65,19 +67,20 @@ export default {
     } else {
       let embed = new MessageEmbed()
         .setTitle(`There is a message from staff of CMC`)
-        .setAuthor({ name: interaction.user.username })
+        .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`Message \n ` + "`" + messages + "`")
         .setColor("BLURPLE")
         .setTimestamp();
-
-      user
-        .send({ embeds: [embed] })
-        .catch(() => {
-          return "Cant Dm that user";
-        })
-        .then(() => {
-          return `Sent Message to ${member.user.username}`;
-        });
+    try { 
+      await user
+      .send({ embeds: [embed] })
+    } catch (err) {
+      message? await ((message as Message).channel as TextChannel).send({ content: 'Cant send message to that user' }) : await interaction.reply({ content: 'Cant send message to that user' })!;
+    } finally {
+      message? await ((message as Message).channel as TextChannel).send({ content: 'Sent Message to that user' }) : await interaction.reply({ content: 'Sent Message to that user' })!;
+    }
+     
+        
     }
   },
 } as ICommand;
