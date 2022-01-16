@@ -27,7 +27,7 @@ export default {
     let users = args.shift()! as string;
     if (!users) return 'No user is defined'
     const messages = args.join(" ");
-    if (args.includes("@everyone" || "@here")) return;
+    if (messages.includes("@everyone" || "@here")) return;
 
     let user: User | undefined;
 
