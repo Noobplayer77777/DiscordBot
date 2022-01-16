@@ -12,27 +12,3 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import mongoose, { Schema } from "mongoose";
-
-const _ = {
-    type: String,
-    required: true,
-}
-
-const schema = new Schema({
-    userId: _,
-    staffId: _,
-    reason: _,
-    expires: Date,
-    type: {
-        type: String,
-        required: true,
-        enum: ['ban', 'mute'],
-    }
-}, { 
-    timestamps: true
-})
-
-const name = 'Punishments';
-
-export default mongoose.models[name] || mongoose.model(name, schema)

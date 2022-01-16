@@ -22,8 +22,8 @@ export default {
   description: "Helps in making someone be erased from reality",
   permissions: ["BAN_MEMBERS"],
   minArgs: 3,
-  expectedArgs: "<user> <duration> <reason>",
-  expectedArgsTypes: ["USER", "STRING", "STRING"],
+  expectedArgs: "<user> <duration> [perm] <reason>",
+  expectedArgsTypes: ["USER", "STRING", "BOOLEAN", "STRING"],
   slash: "both",
   testOnly: true,
   callback: async ({
@@ -38,6 +38,9 @@ export default {
 
     let userId = args.shift()!;
     const duration = args.shift()!;
+    let perm;
+    if (message) perm = args.shift()!;
+    if (interaction) perm = interaction.options.getBoolean("perm") as Boolean;
     const reason = args.join(" ");
 
     let user: User | undefined;
@@ -89,33 +92,60 @@ export default {
     if (result) return `<@${userId}> is already banned`;
 
     try {
-      const member = await guild.members.fetch(userId);
+      const member = await guild.members.fetch(userId)!;
+      if (!member) {
+        return "`Cant Fetch The User as a GuildMember`";
+      }
       const embed = new MessageEmbed()
         .setAuthor({
           name: staff.displayName,
           iconURL: staff.displayAvatarURL(),
         })
-        .setTitle(`Bammed`)
-        .setColor("DARK_BUT_NOT_BLACK")
+        .setTitle(`Banned`)
+        .setColor("RED")
         .setDescription(
-          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ` + type ===
-            "perm"
-            ? `Perm`
-            : duration
-        );
-      member.send({ embeds: [embed] });
+          `Reason : ${reason} \n Staff : <@${staff.id}>  \n Time : ` + (perm
+            ? `Permenent`
+            : duration)
+        )
+        .setImage(`https://i.imgur.com/OIvqxNK.png`)
+        .setThumbnail(`https://cdn.discordapp.com/icons/807616952650301440/684b714914eed2de259448fe01f53dde.png?size=4096`)
 
-      if (member) {
-        member.ban({ days: 7, reason: reason });
-      }
-      if (type !== "perm") {
-        await new Schemas({
-          userId,
-          staffId: staff.id,
-          reason,
-          expires,
-          type: "ban",
-        }).save();
+     await member.send({ embeds: [embed] });
+      if (message) {
+        if (perm === "true") {
+          if (member) {
+            member.ban({ days: 7, reason: reason });
+          }
+        } else {
+            await new Schemas({
+              userId,
+              staffId: staff.id,
+              reason,
+              expires,
+              type: "ban",
+            }).save();
+
+            member.ban({ days: 7, reason: reason });
+            
+          
+        }
+      } else {
+        
+        if (perm) {
+          member.ban({ days: 7, reason: reason });
+        } else {
+          await new Schemas({
+            userId,
+            staffId: staff.id,
+            reason,
+            expires,
+            type: "ban",
+          }).save();
+
+          member.ban({ days: 7, reason: reason });
+        }
+
       }
     } catch (err) {
       throw err;

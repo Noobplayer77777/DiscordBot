@@ -20,19 +20,13 @@ const _ = {
 }
 
 const schema = new Schema({
-    userId: _,
-    staffId: _,
-    reason: _,
-    expires: Date,
-    type: {
-        type: String,
-        required: true,
-        enum: ['ban', 'mute'],
-    }
-}, { 
+    userId:_,
+    reason:_,
+    staffId:_,
+}, {
     timestamps: true
 })
 
-const name = 'Punishments';
+const name = 'warns';
 
 export default mongoose.models[name] || mongoose.model(name, schema)

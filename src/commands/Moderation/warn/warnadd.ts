@@ -12,27 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import mongoose, { Schema } from "mongoose";
+import { ICommand } from "wokcommands";
 
-const _ = {
-    type: String,
-    required: true,
+export default {
+category: 'Moderation',
+description: `Warns a user`,
+options: [
+    {
+        name: 'user',
+        type: `USER`,
+        description: 'The target',
+        required: true,
+    }, {
+        name: 'reason',
+        type: `STRING`,
+        description: 'Reason for the warn',
+        required: true,
+    }
+
+],
+permissions: ['KICK_MEMBERS'],
+slash: 'both',
+testOnly: true,
+callback: async({ guild, member: staff, interaction }) => { 
+    
 }
 
-const schema = new Schema({
-    userId: _,
-    staffId: _,
-    reason: _,
-    expires: Date,
-    type: {
-        type: String,
-        required: true,
-        enum: ['ban', 'mute'],
-    }
-}, { 
-    timestamps: true
-})
 
-const name = 'Punishments';
-
-export default mongoose.models[name] || mongoose.model(name, schema)
+} as ICommand
