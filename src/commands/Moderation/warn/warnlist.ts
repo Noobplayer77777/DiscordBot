@@ -50,7 +50,8 @@ callback: async({ member:staff, interaction, message, args, client }) => {
    let description = `Warnings for <@${user?.id}>:\n\n`;
 
    for(const warn of warnings) {
-       description += `**ID:** ${warn._id}\n`
+       description += `**MongoID ${warn._id}`
+       description += `**UserID:** ${warn.userId}\n`
        description += `**Date:** ${warn.createdAt.toLocaleString()}\n`
        description += `**Staff** <@${warn.staffId}>\n`
        description += `**Reason** ${warn.reason}\n\n`
