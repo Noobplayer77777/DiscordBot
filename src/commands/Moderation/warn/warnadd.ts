@@ -64,15 +64,22 @@ export default {
       .setTimestamp();
     let embel = new MessageEmbed()
       .setTitle("Warning")
-      .setDescription(`You been warned for ${reason}`)
+      .setDescription(`You been warned for ${reason}\n By <@${staff.id}>`)
       .setColor("RED")
       .setTimestamp();
-    return {
-      custom: true,
-      content: { embeds: [embed] },
-      allowedMentions: {
-        users: [],
-      },
-    };
+      try { 
+      await  user.send({ embeds: [embel] })
+      } catch (e) {
+        return;
+      }
+
+    
+    // return {
+    //   custom: true,
+    //   content: { embeds: [embed] },
+    //   allowedMentions: {
+    //     users: [],
+    //   },
+    // };
   },
 } as ICommand;
