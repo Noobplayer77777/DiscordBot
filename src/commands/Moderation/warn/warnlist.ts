@@ -59,6 +59,7 @@ callback: async({ member:staff, interaction, message, args, client }) => {
 
    const embed = new MessageEmbed()
    .setDescription(description)
+   .setColor('BLUE')
 
    return embed;
 }
