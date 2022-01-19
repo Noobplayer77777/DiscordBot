@@ -18,6 +18,7 @@ import schemas from "../../../database/mongo/schemas/warn";
 
 export default {
   category: "Moderation",
+  names: 'warnadd',
   description: `Warns a user`,
   expectedArgs: "<user> <reason>",
   expectedArgsTypes: ["USER", "STRING"],
