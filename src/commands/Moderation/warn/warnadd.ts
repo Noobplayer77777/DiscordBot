@@ -59,7 +59,7 @@ export default {
     });
     let embed = new MessageEmbed()
       .setTitle("Warning")
-      .setDescription(`<@${user.id}> has been warned for ${reason}`)
+      .setDescription(`<@${user.id}> has been warned for  ${reason}`)
       .setColor("AQUA")
       .setTimestamp();
     let embel = new MessageEmbed()
@@ -74,12 +74,12 @@ export default {
       }
 
     
-    // return {
-    //   custom: true,
-    //   content: { embeds: [embed] },
-    //   allowedMentions: {
-    //     users: [],
-    //   },
-    // };
+    return {
+      custom: true,
+      embeds: [embed],
+      allowedMentions: {
+        users: [],
+      },
+    };
   },
 } as ICommand;
