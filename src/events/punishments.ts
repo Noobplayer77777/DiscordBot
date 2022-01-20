@@ -24,9 +24,9 @@ export default (client: Client) => {
 
     if (result) {
       const mutedRole = member.guild.roles.cache.find(
-        (role) => role.name === "Muted"!
+        (role) => role.name === "Muted"
       ) as Role;
-      member.roles.add(mutedRole)!;
+      member.roles.add(mutedRole);
     }
   });
 
