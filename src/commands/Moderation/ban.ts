@@ -150,14 +150,21 @@ export default {
       throw err;
     }
     let embed2 = new MessageEmbed()
-    .setTitle("Moderation Action")
-    .setDescription(` Type : Ban \n Victim : <@${user}> \n Staff: <@${staff.id}> \n Duration: ${type}`)
-    .setThumbnail(user.displayAvatarURL())
-    .setColor("DARK_RED")
-    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
-    .setTimestamp();
-    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
-    channels.send({ embeds: [embed2] })
+      .setTitle("Moderation Action")
+      .setDescription(
+        ` Type : Ban \n Victim : <@${user}> \n Staff: <@${staff.id}> \n Duration: ${type}`
+      )
+      .setThumbnail(user.displayAvatarURL())
+      .setColor("DARK_RED")
+      .setAuthor({
+        name: staff.user.username,
+        iconURL: staff.displayAvatarURL(),
+      })
+      .setTimestamp();
+    const channels = (await client.channels.fetch(
+      "933582319187538001"
+    )) as TextChannel;
+    channels.send({ embeds: [embed2] });
     return `<@${userId}> has been banned for ${duration}`;
   },
 } as ICommand;

@@ -24,7 +24,14 @@ export default {
   guildOnly: true,
   slash: "both",
   testOnly: true,
-  callback: async ({ message, interaction, args, client, guild, member:staff }) => {
+  callback: async ({
+    message,
+    interaction,
+    args,
+    client,
+    guild,
+    member: staff,
+  }) => {
     let user: User | undefined;
     let userId = args.shift()!;
     const reason = args.join(" ");
@@ -64,7 +71,7 @@ export default {
             ? message.author.displayAvatarURL()
             : interaction.user.displayAvatarURL(),
         })
-        
+
         .setColor("DARK_RED")
         .setTimestamp();
 
@@ -73,13 +80,20 @@ export default {
       return `Kicked <@${user.id}> , But couldnt Dm them`;
     }
     let embed2 = new MessageEmbed()
-    .setTitle("Moderation Action")
-    .setDescription(` Type : Kick \n Victim : <@${user}> \n Staff: <@${staff.id}> \n Duration: Once`)
-    .setColor("DARK_RED")
-    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
-    .setTimestamp();
-    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
-    channels.send({ embeds: [embed2] })
+      .setTitle("Moderation Action")
+      .setDescription(
+        ` Type : Kick \n Victim : <@${user}> \n Staff: <@${staff.id}> \n Duration: Once`
+      )
+      .setColor("DARK_RED")
+      .setAuthor({
+        name: staff.user.username,
+        iconURL: staff.displayAvatarURL(),
+      })
+      .setTimestamp();
+    const channels = (await client.channels.fetch(
+      "933582319187538001"
+    )) as TextChannel;
+    channels.send({ embeds: [embed2] });
 
     return `<@${user.id}> has been kicked for ${reason}`;
   },

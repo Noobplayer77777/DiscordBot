@@ -119,15 +119,22 @@ export default {
       throw err;
     }
     let embed2 = new MessageEmbed()
-    .setTitle("Moderation Action")
-    .setDescription(` Type : Mute \n Victim : <@${userId}> \n Staff: <@${staff.id}> \n Duration: ${duration}`)
-    .setColor("DARK_RED")
-    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
-    .setThumbnail(user.displayAvatarURL())
-    .setTimestamp();
-    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
-    channels.send({ embeds: [embed2] })
-    
+      .setTitle("Moderation Action")
+      .setDescription(
+        ` Type : Mute \n Victim : <@${userId}> \n Staff: <@${staff.id}> \n Duration: ${duration}`
+      )
+      .setColor("DARK_RED")
+      .setAuthor({
+        name: staff.user.username,
+        iconURL: staff.displayAvatarURL(),
+      })
+      .setThumbnail(user.displayAvatarURL())
+      .setTimestamp();
+    const channels = (await client.channels.fetch(
+      "933582319187538001"
+    )) as TextChannel;
+    channels.send({ embeds: [embed2] });
+
     return `<@${userId}> has been muted for ${duration}`;
   },
 } as ICommand;
