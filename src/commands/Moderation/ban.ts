@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ICommand } from "wokcommands";
-import { MessageActionRow, MessageEmbed, User } from "discord.js";
+import { MessageActionRow, MessageEmbed, User, TextChannel } from "discord.js";
 import Schemas from "../../database/mongo/schemas/punishment";
 import punishment from "../../database/mongo/schemas/punishment";
 
@@ -149,7 +149,15 @@ export default {
     } catch (err) {
       throw err;
     }
-
+    let embed2 = new MessageEmbed()
+    .setTitle("Moderation Action")
+    .setDescription(` Type : Ban \n Victim : <@${user}> \n Staff: <@${staff.id}> \n Duration: ${type}`)
+    .setThumbnail(user.displayAvatarURL())
+    .setColor("DARK_RED")
+    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
+    .setTimestamp();
+    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
+    channels.send({ embeds: [embed2] })
     return `<@${userId}> has been banned for ${duration}`;
   },
 } as ICommand;

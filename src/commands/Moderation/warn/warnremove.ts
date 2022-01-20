@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ICommand } from "wokcommands";
+import { MessageEmbed, TextChannel } from "discord.js";
 import schemas from "../../../database/mongo/schemas/warn";
 
 export default {
@@ -32,6 +33,16 @@ export default {
     }
 
     const warning = await schemas.findByIdAndDelete(user);
+    const users = await await client.users.fetch(`${user}`);
+    let embed2 = new MessageEmbed()
+    .setTitle("Moderation Action")
+    .setDescription(` Type : Warn Remove \n Victim : <@${user}> \n Staff: <@${staff.id}> \n Duration: Permenant`)
+    .setColor("GREEN")
+    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
+    .setTimestamp()
+    .setThumbnail(users.displayAvatarURL());
+    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
+    channels.send({ embeds: [embed2] })
 
     return {
       custom: true,
@@ -40,5 +51,7 @@ export default {
         users: [],
       },
     };
+
+    
   },
 } as ICommand;

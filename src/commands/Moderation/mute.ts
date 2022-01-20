@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ICommand } from "wokcommands";
-import { MessageActionRow, MessageEmbed, User } from "discord.js";
+import { MessageActionRow, MessageEmbed, User, TextChannel } from "discord.js";
 import Schemas from "../../database/mongo/schemas/punishment";
 import punishment from "../../database/mongo/schemas/punishment";
 
@@ -102,7 +102,7 @@ export default {
       member.send({ embeds: [embed] });
 
       if (member) {
-        const muterole = await guild.roles.fetch("929950822865965102");
+        const muterole = await guild.roles.fetch("932269728028827668");
         if (muterole) {
           await member.roles.add(muterole);
         }
@@ -118,7 +118,16 @@ export default {
     } catch (err) {
       throw err;
     }
-
+    let embed2 = new MessageEmbed()
+    .setTitle("Moderation Action")
+    .setDescription(` Type : Mute \n Victim : <@${userId}> \n Staff: <@${staff.id}> \n Duration: ${duration}`)
+    .setColor("DARK_RED")
+    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
+    .setThumbnail(user.displayAvatarURL())
+    .setTimestamp();
+    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
+    channels.send({ embeds: [embed2] })
+    
     return `<@${userId}> has been muted for ${duration}`;
   },
 } as ICommand;

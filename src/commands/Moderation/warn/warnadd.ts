@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MessageEmbed, User } from "discord.js";
+import { MessageEmbed, TextChannel, User } from "discord.js";
 import { ICommand } from "wokcommands";
 import schemas from "../../../database/mongo/schemas/warn";
 
@@ -66,7 +66,16 @@ export default {
     } catch (e) {
       return;
     }
-
+    let embed2 = new MessageEmbed()
+    .setTitle("Moderation Action")
+    .setDescription(` Type : Warn \n Victim : <@${userId}> \n Staff: <@${userId}> \n Duration: Permenant`)
+    .setColor("DARK_RED")
+    .setAuthor({ name: staff.user.username, iconURL: staff.displayAvatarURL() })
+    .setThumbnail(user.displayAvatarURL())
+    .setTimestamp();
+    const channels = await client.channels.fetch('933582319187538001') as TextChannel;
+    channels.send({ embeds: [embed2] })
+    
     return {
       custom: true,
       embeds: [embed],
