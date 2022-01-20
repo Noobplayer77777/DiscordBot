@@ -12,40 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import { ICommand } from "wokcommands";
-import schemas from "../../../database/mongo/schemas/warn"
+import schemas from "../../../database/mongo/schemas/warn";
 
 export default {
-category: 'Moderation',
-description: 'Lists all the warns of the user',
-expectedArgs: '<userid>',
-expectedArgsTypes: ['STRING'],
-slash: 'both',
-permissions: ['KICK_MEMBERS'], 
-callback: async({ member: staff, args, interaction, message, client }) => {
-
+  category: "Moderation",
+  description: "Lists all the warns of the user",
+  expectedArgs: "<userid>",
+  expectedArgsTypes: ["STRING"],
+  slash: "both",
+  permissions: ["KICK_MEMBERS"],
+  callback: async ({ member: staff, args, interaction, message, client }) => {
     let user: String | undefined;
 
     if (message) {
-        user = args.shift()!;
+      user = args.shift()!;
     } else {
-        user = interaction.options.getString("userid") as String;
+      user = interaction.options.getString("userid") as String;
     }
 
-    const warning = await schemas.findByIdAndDelete(user)
+    const warning = await schemas.findByIdAndDelete(user);
 
-    return { 
-        custom: true,
-        content: `Removed warning ${warning.id} from <@${user}>`,
-        allowedMentions: {
-            users: [],
-        }
+    return {
+      custom: true,
+      content: `Removed warning ${warning.id} from <@${user}>`,
+      allowedMentions: {
+        users: [],
+      },
     };
-
-
-
-
-
-}
-} as ICommand
+  },
+} as ICommand;

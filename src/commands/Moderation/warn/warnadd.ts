@@ -18,20 +18,14 @@ import schemas from "../../../database/mongo/schemas/warn";
 
 export default {
   category: "Moderation",
-  names: 'warnadd',
+  names: "warnadd",
   description: `Warns a user`,
   expectedArgs: "<user> <reason>",
   expectedArgsTypes: ["USER", "STRING"],
   permissions: ["KICK_MEMBERS"],
-  slash: 'both',
+  slash: "both",
   testOnly: true,
-  callback: async ({
-    member: staff,
-    interaction,
-    message,
-    args,
-    client,
-  }) => {
+  callback: async ({ member: staff, interaction, message, args, client }) => {
     let userId = args.shift()!;
     let reason = args.join(" ");
 
@@ -67,13 +61,12 @@ export default {
       .setDescription(`You been warned for ${reason}\n By <@${staff.id}>`)
       .setColor("RED")
       .setTimestamp();
-      try { 
-      await  user.send({ embeds: [embel] })
-      } catch (e) {
-        return;
-      }
+    try {
+      await user.send({ embeds: [embel] });
+    } catch (e) {
+      return;
+    }
 
-    
     return {
       custom: true,
       embeds: [embed],
