@@ -18,7 +18,7 @@ export default (client: Client) => {
    client.on("messageCreate", message => {
        try { 
         if (message.content === "robots.txt") {
-            message.reply(`\`This File is created in the future (2030) \n After The robot Invasion to\n THis File is created to save humanity from Robots \n 404 UNABLE TO RETRIVE DATA\``)
+            message.reply(`\`This File is created in the future (2030) \nAfter The robot Invasion of humanity\nThis File is created to save humanity from Robots \nInstruction \n 403 Forbidden SERVER NOT RESPONDING\``)
         }
        } catch (e) {
            console.log(e)
