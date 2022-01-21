@@ -18,7 +18,7 @@ export default (client:Client) => {
        const moglog = await client.channels.fetch("933582319187538001") as TextChannel
        let embed = new MessageEmbed()
        .setTitle('Message Deleted')
-       .setDescription(`Message :\` ${message.content} \` `)
+       .setDescription(`Message :\` ${message.content} \` Author: ${message.author}`)
        .setColor("YELLOW")
        .setTimestamp();
        moglog.send({ embeds:[embed] })
