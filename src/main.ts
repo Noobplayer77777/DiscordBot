@@ -26,7 +26,7 @@ const client = new Client({
 });
 
 client.on("ready", async () => {
-  client.user?.setActivity('Sequelize It!!!', { type: 'WATCHING' });
+  client.user?.setActivity("Sequelize It!!!", { type: "WATCHING" });
   new WOKCommands(client, {
     typeScript: true,
     commandDir: path.join(__dirname, "commands"),
@@ -48,6 +48,5 @@ client.on("ready", async () => {
     ],
   }).setDefaultPrefix("!");
 });
-
 
 client.login(process.env.TOKEN);

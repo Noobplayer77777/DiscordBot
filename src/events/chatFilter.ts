@@ -17,7 +17,9 @@ import Forbidden from "../../forbidden.json";
 
 export default (client: Client) => {
   client.on("messageCreate", async (message) => {
-    const modlog = await client.channels.fetch('933582319187538001') as TextChannel/*Need to change*/
+    const modlog = (await client.channels.fetch(
+      "933582319187538001"
+    )) as TextChannel; /*Need to change*/
     const rRole = await message.guild?.members.fetch(message.author.id);
     if (rRole?.roles.cache.has(`933729350887538689`)) return;
     if (!message.guild) return;
@@ -27,14 +29,15 @@ export default (client: Client) => {
         `${message.author} , Your not allowed to send messages containing more than 500 characters`
       );
       const embed = new MessageEmbed()
-      .setTitle(`AutoMod Violation`)
-      .setDescription(`Author: ${message.author} \n Type: More than 500 characters \n Message: \`${message.content}\``)
-      .setColor("DARK_RED")
-      .setTimestamp()
-      .setFooter({ text: `${message.author.id}`})
+        .setTitle(`AutoMod Violation`)
+        .setDescription(
+          `Author: ${message.author} \n Type: More than 500 characters \n Message: \`${message.content}\``
+        )
+        .setColor("DARK_RED")
+        .setTimestamp()
+        .setFooter({ text: `${message.author.id}` });
 
-      modlog.send({ embeds:[embed] })
-
+      modlog.send({ embeds: [embed] });
 
       return;
     }
@@ -47,18 +50,19 @@ export default (client: Client) => {
     }
     var testContent = message.content;
     if (isValidURL(testContent)) {
-      
       message.delete();
       await message.channel.send(`Links are forbidden ${message.author}`);
       const embed = new MessageEmbed()
-      .setTitle(`AutoMod Violation`)
-      .setDescription(`Author: ${message.author} \n Type: Links \n Message: \`${message.content}\``)
-      .setColor("DARK_RED")
-      .setTimestamp()
-      .setFooter({ text: `${message.author.id}`})
+        .setTitle(`AutoMod Violation`)
+        .setDescription(
+          `Author: ${message.author} \n Type: Links \n Message: \`${message.content}\``
+        )
+        .setColor("DARK_RED")
+        .setTimestamp()
+        .setFooter({ text: `${message.author.id}` });
 
-      modlog.send({ embeds:[embed] })
-      
+      modlog.send({ embeds: [embed] });
+
       return;
     }
 
@@ -72,16 +76,17 @@ export default (client: Client) => {
         `Your Message has been flagged for forbidden words \n Message: ${message.content}`
       );
       await message.delete();
-      
 
       const embed = new MessageEmbed()
-      .setTitle(`AutoMod Violation`)
-      .setDescription(`Author: ${message.author} \n Type: Forbidden Words \n Message: \`${message.content}\``)
-      .setColor("DARK_RED")
-      .setTimestamp()
-      .setFooter({ text: `${message.author.id}`})
+        .setTitle(`AutoMod Violation`)
+        .setDescription(
+          `Author: ${message.author} \n Type: Forbidden Words \n Message: \`${message.content}\``
+        )
+        .setColor("DARK_RED")
+        .setTimestamp()
+        .setFooter({ text: `${message.author.id}` });
 
-      modlog.send({ embeds:[embed] })
+      modlog.send({ embeds: [embed] });
     }
   });
 };
