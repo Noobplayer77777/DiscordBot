@@ -1,3 +1,3 @@
-## Planned Features
+# Planned Features
 
-# Planned Feature(s) are `Music Module With lavalink`
+## Planned Feature(s) are `Music Module With lavalink`
