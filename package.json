@@ -5,7 +5,8 @@
   "main": "src/main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "Test": "ts-node test/test.ts"
+    "Test": "ts-node test/test.ts",
+    "run": "node compiled/"
   },
   "repository": {
     "type": "git",
@@ -31,9 +32,10 @@
     "discord-api-types": "^0.26.0",
     "discord.js": "^13.5.1",
     "dotenv": "^10.0.0",
+    "erela.js": "^2.3.3",
     "mongoose": "^6.0.14",
     "ping": "^0.4.1",
-    "puppeteer": "^12.0.1",
+    "puppeteer": "^13.1.2",
     "wokcommands": "^1.5.3"
   },
   "devDependencies": {
