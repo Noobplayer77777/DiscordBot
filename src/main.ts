@@ -16,7 +16,7 @@ import { Client } from "discord.js";
 import WOKCommands from "wokcommands";
 import path from "path";
 import dotenv from "dotenv";
-import { Manager } from "erela.js"
+import { Manager } from "erela.js";
 dotenv.config();
 
 const nodes = [
@@ -24,7 +24,7 @@ const nodes = [
     host: process.env.Host,
     password: process.env.Password,
     port: process.env.Port,
-  }
+  },
 ];
 
 const client = new Client({
@@ -33,8 +33,6 @@ const client = new Client({
     status: "dnd",
   },
 });
-
-
 
 client.on("ready", async () => {
   client.user?.setActivity("Sequelize It!!!", { type: "WATCHING" });
@@ -49,7 +47,11 @@ client.on("ready", async () => {
     ],
     delErrMsgCooldown: 2,
     ephemeral: false,
-    testServers: ["929950822857584650", "931924563384741929", "807616952650301440"],
+    testServers: [
+      "929950822857584650",
+      "931924563384741929",
+      "807616952650301440",
+    ],
     mongoUri: process.env.Mongo,
     disabledDefaultCommands: [
       "langauge",
