@@ -31,7 +31,7 @@ exports.default = {
     slash: 'both',
     testOnly: true,
     callback: ({ args, message, interaction, member }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         const { channel } = member.voice;
         if (!channel)
             return 'You need to be in a voice channel :)';
@@ -53,8 +53,13 @@ exports.default = {
             textChannel: channelId,
             voiceChannel: channel.id
         });
-        if (player.state !== "CONNECTED")
-            player.connect();
+        try {
+            if (player.state !== "CONNECTED")
+                player.connect();
+        }
+        catch (e) {
+            console.error(`Expection occured at play.ts/54`, e);
+        }
         const search = args.join(" ");
         let res;
         try {
@@ -62,7 +67,7 @@ exports.default = {
             if (res.loadType === 'LOAD_FAILED') {
                 if (!player.queue.current)
                     player.destroy();
-                throw res.exception;
+                console.error(res.exception);
             }
         }
         catch (e) {
@@ -100,13 +105,14 @@ exports.default = {
                 ;
                 try {
                     if (message) {
-                        collected = yield message.channel.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] });
+                        collected = yield ((_f = message.channel) === null || _f === void 0 ? void 0 : _f.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
                     }
                     else {
-                        collected = yield ((_f = interaction.channel) === null || _f === void 0 ? void 0 : _f.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
+                        collected = yield ((_g = interaction.channel) === null || _g === void 0 ? void 0 : _g.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
                     }
                 }
                 catch (e) {
+                    console.error(`Exception happended in play.ts/105`);
                     if (message) {
                         return 'Something went wrong';
                     }
@@ -115,7 +121,7 @@ exports.default = {
                         return;
                     }
                 }
-                const first = (_g = collected.first()) === null || _g === void 0 ? void 0 : _g.content;
+                const first = (_h = collected.first()) === null || _h === void 0 ? void 0 : _h.content;
                 if (first.toLowerCase() === 'end') {
                     if (!player.queue.current)
                         player.destroy();
@@ -139,15 +145,19 @@ exports.default = {
                 }
                 const track = res.tracks[index];
                 player.queue.add(track);
-                if (!player.playing && !player.paused && !player.queue.size)
-                    player.play();
-                if (message) {
-                    message.reply(`Queuing \` ${track.title} \``);
+                try {
+                    if (!player.playing && !player.paused && !player.queue.size)
+                        player.play();
+                    if (message) {
+                        message.channel.send(`Queuing \` ${track.title} \``);
+                    }
+                    else {
+                        interaction.followUp(`Queuing \` ${track.title} \` `);
+                    }
                 }
-                else {
-                    interaction.followUp(`Queuing \` ${track.title} \` `);
+                catch (e) {
+                    console.error('Expection happended at play.ts/147', e);
                 }
-                return;
         }
     })
 };

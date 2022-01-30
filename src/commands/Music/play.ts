@@ -48,15 +48,19 @@ callback: async({ args, message, interaction, member }) => {
        voiceChannel: channel.id
        
    })
-
-   if (player.state !== "CONNECTED")  player.connect();
+    try {
+      if (player.state !== "CONNECTED")  player.connect();
+    } catch (e) {
+      console.error(`Expection occured at play.ts/54`, e)
+    }
+   
    const search = args.join(" ");
    let res;
    try {
     res = await player.search(search, member);
     if (res.loadType === 'LOAD_FAILED') {
         if (!player.queue.current) player.destroy();
-        throw res.exception;
+        console.error(res.exception);
     }
    } catch (e) {
        return;
@@ -96,12 +100,13 @@ callback: async({ args, message, interaction, member }) => {
 
       try {
         if (message) {
-        collected = await message.channel.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] })!;
+        collected = await message.channel?.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] })!;
         } else {
         collected = await interaction.channel?.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] })!;
         }
 
       } catch (e) {
+        console.error(`Exception happended in play.ts/105`)
        if (message) {
          return 'Something went wrong';
        } else {
@@ -134,14 +139,19 @@ callback: async({ args, message, interaction, member }) => {
 
       const track = res.tracks[index];
       player.queue.add(track);
-
-      if (!player.playing && !player.paused && !player.queue.size) player.play();
-      if (message) {
-        message.reply(`Queuing \` ${track.title} \``)
-       } else {
-         interaction.followUp(`Queuing \` ${track.title} \` `)
-       }
-      return;
+   try {
+    if (!player.playing && !player.paused && !player.queue.size) player.play();
+    if (message) {
+      message.channel.send(`Queuing \` ${track.title} \``)
+     } else {
+       interaction.followUp(`Queuing \` ${track.title} \` `)
+     }
+    
+   }  catch (e) {
+     console.error('Expection happended at play.ts/147', e)
+   } 
+   
+     
 
     }
 }

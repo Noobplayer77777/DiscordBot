@@ -43,7 +43,8 @@ export const lavalink = new Manager({
 
 
 lavalink.on("nodeConnect", node => {
-  console.log(`Lavalink: ${node.options.identifier} has connected`)
+  console.log(`Lavalink: ${node.options.identifier} has connected`);
+  
 })
 
 lavalink.on("nodeError", (node , err) => {

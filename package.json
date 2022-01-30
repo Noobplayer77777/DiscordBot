@@ -4,9 +4,9 @@
   "description": "discord bot",
   "main": "src/main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "Test": "ts-node test/test.ts",
-    "run": "node compiled/"
+    "build": "tsc",
+    "test": "ts-node test/test.ts",
+    "run": "node ./dist/src/main.js"
   },
   "repository": {
     "type": "git",
