@@ -19,22 +19,40 @@ import dotenv from "dotenv";
 import { Manager } from "erela.js";
 dotenv.config();
 
-const nodes = [
-  {
-    host: process.env.Host,
-    password: process.env.Password,
-    port: process.env.Port,
-  },
-];
+
 
 const client = new Client({
-  intents: 8071,
+  intents: 32703,
   presence: {
     status: "dnd",
   },
 });
 
+export const lavalink = new Manager({
+  nodes: [{
+    host: process.env.Host!,
+    password: process.env.Password!,
+    port: 25649
+  }],
+  autoPlay: true,
+  send: (id, payload) => {
+    const guild = client.guilds.cache.get(id);
+    if (guild) guild.shard.send(payload);
+  }
+})
+
+
+lavalink.on("nodeConnect", node => {
+  console.log(`Lavalink: ${node.options.identifier} has connected`)
+})
+
+lavalink.on("nodeError", (node , err) => {
+  console.log(`Node ${node.options.identifier} has encountered an error: ${err.message}`)
+})
+
 client.on("ready", async () => {
+  lavalink.init(client.user?.id)
+
   client.user?.setActivity("Sequelize It!!!", { type: "WATCHING" });
   new WOKCommands(client, {
     typeScript: true,
@@ -61,5 +79,7 @@ client.on("ready", async () => {
     ],
   }).setDefaultPrefix("!");
 });
+
+client.on("raw", d => lavalink.updateVoiceState(d));
 
 client.login(process.env.TOKEN);
