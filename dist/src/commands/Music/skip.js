@@ -1,12 +1,12 @@
 "use strict";
 // Copyright 2022 Northern Star
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,11 +24,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../../main");
 exports.default = {
-    category: 'Music',
-    description: 'Skips the current track',
-    aliases: ['s'],
+    category: "Music",
+    description: "Skips the current track",
+    aliases: ["s"],
     testOnly: true,
-    slash: 'both',
+    slash: "both",
     callback: ({ member }) => __awaiter(void 0, void 0, void 0, function* () {
         const player = main_1.lavalink.get(member.guild.id);
         if (!player) {
@@ -44,8 +44,7 @@ exports.default = {
         if (!player.queue.current) {
             return "There is no music playing currently";
         }
-        ;
         player.stop();
-        return ``;
-    })
+        return `${player.queue.current.title} has been skipped by ${member}`;
+    }),
 };

@@ -26,9 +26,9 @@ const main_1 = require("../../main");
 exports.default = {
     category: "Music",
     description: "Stops the player!",
-    aliases: ['s'],
+    aliases: ["s"],
     testOnly: true,
-    slash: 'both',
+    slash: "both",
     callback: ({ member }) => __awaiter(void 0, void 0, void 0, function* () {
         const player = main_1.lavalink.get(member.guild.id);
         if (!player) {
@@ -43,5 +43,5 @@ exports.default = {
         }
         player.destroy();
         return "The player has stopped";
-    })
+    }),
 };

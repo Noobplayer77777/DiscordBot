@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../../main");
 exports.default = {
     category: "Music",
-    aliases: ['ps'],
+    aliases: ["ps"],
     description: "Pauses the music currently playing",
     testOnly: true,
     slash: "both",

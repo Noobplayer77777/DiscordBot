@@ -26,7 +26,7 @@ const discord_js_1 = require("discord.js");
 const main_1 = require("../../main");
 exports.default = {
     description: "Shows the full queue",
-    aliases: ['q'],
+    aliases: ["q"],
     category: "Music",
     testOnly: true,
     slash: "both",

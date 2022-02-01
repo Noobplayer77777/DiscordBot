@@ -25,11 +25,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../../main");
 exports.default = {
     category: "Music",
-    description: "Resumes the paused music",
+    description: "B A S S",
+    aliases: ["bass"],
+    expectedArgs: "[level]",
+    expectedArgsTypes: ["STRING"],
     testOnly: true,
     slash: "both",
-    aliases: ["r"],
-    callback: ({ member, message, interaction }) => __awaiter(void 0, void 0, void 0, function* () {
+    callback: ({ member, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const player = main_1.lavalink.get(member.guild.id);
         if (!player) {
             return "There is no music player for this guild";
@@ -41,10 +43,18 @@ exports.default = {
         if (channel.id !== player.voiceChannel) {
             return "Your not in the same voice channel as the player!";
         }
-        if (!player.paused) {
-            return "The player is already playing!";
-        }
-        player.pause(false);
-        return "The player has resumed";
+        const levels = {
+            none: 0.0,
+            low: 0.1,
+            medium: 0.15,
+            high: 0.25,
+        };
+        let level = "none";
+        if (args.length && args[0].toLowerCase() in levels)
+            level = args[0].toLowerCase();
+        const bands = new Array(3)
+            .fill(null)
+            .map((_, i) => ({ band: i, gain: levels[level] }));
+        player.setEQ(...bands);
     }),
 };
