@@ -20,6 +20,7 @@ export default {
   description: "Resumes the paused music",
   testOnly: true,
   slash: "both",
+  aliases: ['r'],
   callback: async ({ member, message, interaction }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {

@@ -25,11 +25,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../../main");
 exports.default = {
     category: "Music",
-    aliases: ['ps'],
-    description: "Pauses the music currently playing",
+    description: "Stops the player!",
+    aliases: ['s'],
     testOnly: true,
-    slash: "both",
-    callback: ({ member, message, interaction }) => __awaiter(void 0, void 0, void 0, function* () {
+    slash: 'both',
+    callback: ({ member }) => __awaiter(void 0, void 0, void 0, function* () {
         const player = main_1.lavalink.get(member.guild.id);
         if (!player) {
             return "There is no music player for this guild";
@@ -41,10 +41,7 @@ exports.default = {
         if (channel.id !== player.voiceChannel) {
             return "Your not in the same voice channel as the player!";
         }
-        if (player.paused) {
-            return "The player is already paused!";
-        }
-        player.pause(true);
-        return "The player has paused!";
-    }),
+        player.destroy();
+        return "The player has stopped";
+    })
 };

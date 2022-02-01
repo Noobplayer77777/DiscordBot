@@ -26,9 +26,12 @@ const discord_js_1 = require("discord.js");
 const main_1 = require("../../main");
 exports.default = {
     description: "Shows the full queue",
+    aliases: ['q'],
     category: "Music",
     testOnly: true,
     slash: "both",
+    expectedArgs: `[Page Number]`,
+    expectedArgsTypes: ["NUMBER"],
     callback: ({ member, interaction, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const player = main_1.lavalink.get(member.guild.id);
         if (!player) {

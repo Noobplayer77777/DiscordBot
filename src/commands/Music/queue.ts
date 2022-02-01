@@ -18,9 +18,12 @@ import { lavalink } from "../../main";
 
 export default {
   description: "Shows the full queue",
+  aliases: ['q'],
   category: "Music",
   testOnly: true,
   slash: "both",
+  expectedArgs: `[Page Number]`,
+  expectedArgsTypes: ["NUMBER"],
   callback: async ({ member, interaction, args }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {
@@ -64,18 +67,16 @@ export default {
     }
 
     const maxPages = Math.ceil(queue.length / multiple);
-    
+
     embed.setFooter(`Page ${page > maxPages ? maxPages : page} of ${maxPages}`);
 
     if (interaction) {
-      interaction.followUp({ embeds:[embed] });
+      interaction.followUp({ embeds: [embed] });
     } else {
       return {
         custom: true,
         embeds: [embed],
       };
     }
-
-
   },
 } as ICommand;

@@ -17,11 +17,11 @@ import { lavalink } from "../../main";
 
 export default {
   category: "Music",
-  aliases: ['ps'],
-  description: "Pauses the music currently playing",
+  description: "Stops the player!",
+  aliases: ['s'],
   testOnly: true,
-  slash: "both",
-  callback: async ({ member, message, interaction }) => {
+  slash: 'both',
+  callback: async({ member }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {
       return "There is no music player for this guild";
@@ -36,11 +36,8 @@ export default {
       return "Your not in the same voice channel as the player!";
     }
 
-    if (player.paused) {
-      return "The player is already paused!";
-    }
+    player.destroy();
 
-    player.pause(true);
-    return "The player has paused!";
-  },
+    return "The player has stopped";
+  }
 } as ICommand;

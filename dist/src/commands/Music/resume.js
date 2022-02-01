@@ -28,6 +28,7 @@ exports.default = {
     description: "Resumes the paused music",
     testOnly: true,
     slash: "both",
+    aliases: ['r'],
     callback: ({ member, message, interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         const player = main_1.lavalink.get(member.guild.id);
         if (!player) {

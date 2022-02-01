@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../../main");
 exports.default = {
     category: "Music",
+    aliases: ['p'],
     description: "Plays a song from spotify",
     expectedArgs: "<Search Term OR Link>",
     expectedArgsTypes: ["STRING"],
