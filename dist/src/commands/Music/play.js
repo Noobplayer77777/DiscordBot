@@ -31,28 +31,27 @@ exports.default = {
     slash: 'both',
     testOnly: true,
     callback: ({ args, message, interaction, member }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var _a, _b, _c, _d, _e, _f;
         const { channel } = member.voice;
         if (!channel)
             return 'You need to be in a voice channel :)';
         if (!args.length)
             return 'You need to specify a URL or search term';
-        let guildId;
+        let guildId = member.guild.id;
         let channelId;
         if (message) {
-            guildId = (_a = message.channel) === null || _a === void 0 ? void 0 : _a.id;
-            channelId = (_b = message.channel) === null || _b === void 0 ? void 0 : _b.id;
+            channelId = (_a = message.channel) === null || _a === void 0 ? void 0 : _a.id;
         }
         else {
             yield interaction.deferReply();
-            guildId = (_c = interaction.channel) === null || _c === void 0 ? void 0 : _c.id;
-            channelId = (_d = interaction.channel) === null || _d === void 0 ? void 0 : _d.id;
+            channelId = (_b = interaction.channel) === null || _b === void 0 ? void 0 : _b.id;
         }
         const player = main_1.lavalink.create({
             guild: guildId,
             textChannel: channelId,
             voiceChannel: channel.id
         });
+        player.connect();
         try {
             if (player.state !== "CONNECTED")
                 player.connect();
@@ -87,7 +86,7 @@ exports.default = {
                 player.queue.add(res.tracks);
                 if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length)
                     player.play();
-                return `enqueuing playlist \`${(_e = res.playlist) === null || _e === void 0 ? void 0 : _e.name}\` with ${res.tracks.length} tracks.`;
+                return `enqueuing playlist \`${(_c = res.playlist) === null || _c === void 0 ? void 0 : _c.name}\` with ${res.tracks.length} tracks.`;
             case 'SEARCH_RESULT':
                 let max = 5, collected, filter = (m) => m.author.id === member.id && /^(\d+|end)$/i.test(m.content);
                 if (res.tracks.length < max)
@@ -105,10 +104,10 @@ exports.default = {
                 ;
                 try {
                     if (message) {
-                        collected = yield ((_f = message.channel) === null || _f === void 0 ? void 0 : _f.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
+                        collected = yield ((_d = message.channel) === null || _d === void 0 ? void 0 : _d.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
                     }
                     else {
-                        collected = yield ((_g = interaction.channel) === null || _g === void 0 ? void 0 : _g.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
+                        collected = yield ((_e = interaction.channel) === null || _e === void 0 ? void 0 : _e.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] }));
                     }
                 }
                 catch (e) {
@@ -121,7 +120,7 @@ exports.default = {
                         return;
                     }
                 }
-                const first = (_h = collected.first()) === null || _h === void 0 ? void 0 : _h.content;
+                const first = (_f = collected.first()) === null || _f === void 0 ? void 0 : _f.content;
                 if (first.toLowerCase() === 'end') {
                     if (!player.queue.current)
                         player.destroy();

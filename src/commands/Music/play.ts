@@ -29,14 +29,12 @@ callback: async({ args, message, interaction, member }) => {
 
    if (!channel) return 'You need to be in a voice channel :)';
    if (!args.length) return 'You need to specify a URL or search term';
-   let guildId:string;
+   let guildId:string = member.guild.id;
    let channelId:string 
    if (message) {
-     guildId = message.channel?.id!
      channelId = message.channel?.id!
    } else {
      await interaction.deferReply();
-     guildId = interaction.channel?.id!;
      channelId = interaction.channel?.id!;
    } 
    
@@ -48,6 +46,7 @@ callback: async({ args, message, interaction, member }) => {
        voiceChannel: channel.id
        
    })
+     player.connect()
     try {
       if (player.state !== "CONNECTED")  player.connect();
     } catch (e) {

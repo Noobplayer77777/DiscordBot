@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "ts-node test/test.ts",
-    "run": "node ./dist/src/main.js"
+    "run": "node ./dist/src/main.js",
+    "main": "ts-node src/main.ts"
   },
   "repository": {
     "type": "git",

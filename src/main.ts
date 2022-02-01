@@ -22,7 +22,7 @@ dotenv.config();
 
 
 const client = new Client({
-  intents: 32703,
+  intents: 14215,
   presence: {
     status: "dnd",
   },

@@ -33,7 +33,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const erela_js_1 = require("erela.js");
 dotenv_1.default.config();
 const client = new discord_js_1.Client({
-    intents: 32703,
+    intents: 14215,
     presence: {
         status: "dnd",
     },
