@@ -5,6 +5,7 @@
   "main": "src/main.ts",
   "scripts": {
     "build": "tsc",
+    "continue": "tsc --watch",
     "test": "ts-node test/test.ts",
     "run": "node ./dist/src/main.js",
     "main": "ts-node src/main.ts"
