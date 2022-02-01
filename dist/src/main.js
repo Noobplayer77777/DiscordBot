@@ -64,7 +64,7 @@ client.on("ready", () => __awaiter(void 0, void 0, void 0, function* () {
     exports.lavalink.init((_a = client.user) === null || _a === void 0 ? void 0 : _a.id);
     (_b = client.user) === null || _b === void 0 ? void 0 : _b.setActivity("Sequelize It!!!", { type: "WATCHING" });
     new wokcommands_1.default(client, {
-        typeScript: true,
+        typeScript: false,
         commandDir: path_1.default.join(__dirname, "commands"),
         featureDir: path_1.default.join(__dirname, "events"),
         botOwners: [
