@@ -50,6 +50,23 @@ exports.default = {
             embed.addField("Current", `[${queue.current.title}](${queue.current.uri})`);
         }
         if (!tracks.length) {
+            embed.setDescription(`No Tracks in ${page > 1 ? `page ${page}` : "the queue"}`);
+        }
+        else {
+            embed.setDescription(tracks
+                .map((track, i) => `${start + ++i} - [${track.title}](${track.uri})`)
+                .join("\n"));
+        }
+        const maxPages = Math.ceil(queue.length / multiple);
+        embed.setFooter(`Page ${page > maxPages ? maxPages : page} of ${maxPages}`);
+        if (interaction) {
+            interaction.followUp({ embeds: [embed] });
+        }
+        else {
+            return {
+                custom: true,
+                embeds: [embed],
+            };
         }
     }),
 };
