@@ -24,16 +24,17 @@ export default {
   callback: async ({ member, interaction, args }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {
-        return "There is no player."
-    };
+      return "There is no player.";
+    }
 
     if (interaction) {
-        interaction.deferReply();
-    };
+      interaction.deferReply();
+    }
 
     const queue = player.queue;
-    const embed = new MessageEmbed()
-    .setAuthor({ name:`Queue for this player` });
+    const embed = new MessageEmbed().setAuthor({
+      name: `Queue for this player`,
+    });
 
     const multiple = 10;
     const page = args.length && Number(args[0]) ? Number(args[0]) : 1;
@@ -44,9 +45,13 @@ export default {
     const tracks = queue.slice(start, end);
 
     if (queue.current) {
-        embed.addField("Current", `[${queue.current.title}](${queue.current.uri})`);
-    } 
+      embed.addField(
+        "Current",
+        `[${queue.current.title}](${queue.current.uri})`
+      );
+    }
 
-    if (!tracks.length) {}
-  }
+    if (!tracks.length) {
+    }
+  },
 } as ICommand;

@@ -34,14 +34,13 @@ exports.default = {
         if (!player) {
             return "There is no player.";
         }
-        ;
         if (interaction) {
             interaction.deferReply();
         }
-        ;
         const queue = player.queue;
-        const embed = new discord_js_1.MessageEmbed()
-            .setAuthor({ name: `Queue for this player` });
+        const embed = new discord_js_1.MessageEmbed().setAuthor({
+            name: `Queue for this player`,
+        });
         const multiple = 10;
         const page = args.length && Number(args[0]) ? Number(args[0]) : 1;
         const end = page * multiple;
@@ -50,6 +49,7 @@ exports.default = {
         if (queue.current) {
             embed.addField("Current", `[${queue.current.title}](${queue.current.uri})`);
         }
-        if (!tracks.length) { }
-    })
+        if (!tracks.length) {
+        }
+    }),
 };
