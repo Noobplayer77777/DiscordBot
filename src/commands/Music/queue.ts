@@ -18,7 +18,7 @@ import { lavalink } from "../../main";
 
 export default {
   description: "Shows the full queue",
-  aliases: ['q'],
+  aliases: ["q"],
   category: "Music",
   testOnly: true,
   slash: "both",

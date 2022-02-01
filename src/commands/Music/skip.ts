@@ -17,7 +17,7 @@ import { lavalink } from "../../main";
 
 export default {
   category: "Music",
-  description: "Stops the player!",
+  description: "Skips the current track",
   aliases: ["s"],
   testOnly: true,
   slash: "both",
@@ -28,6 +28,7 @@ export default {
     }
 
     const { channel } = member.voice;
+
     if (!channel) {
       return "You have to be in a voice channel to do this :)";
     }
@@ -35,9 +36,12 @@ export default {
     if (channel.id !== player.voiceChannel) {
       return "Your not in the same voice channel as the player!";
     }
+    if (!player.queue.current) {
+      return "There is no music playing currently";
+    }
 
-    player.destroy();
+    player.stop();
 
-    return "The player has stopped";
+    return `${player.queue.current.title} has been skipped by ${member}`;
   },
 } as ICommand;

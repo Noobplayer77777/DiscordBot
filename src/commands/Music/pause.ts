@@ -17,7 +17,7 @@ import { lavalink } from "../../main";
 
 export default {
   category: "Music",
-  aliases: ['ps'],
+  aliases: ["ps"],
   description: "Pauses the music currently playing",
   testOnly: true,
   slash: "both",

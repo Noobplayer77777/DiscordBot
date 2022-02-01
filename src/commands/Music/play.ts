@@ -17,7 +17,7 @@ import { lavalink } from "../../main";
 
 export default {
   category: "Music",
-  aliases: ['p'],
+  aliases: ["p"],
   description: "Plays a song from spotify",
   expectedArgs: "<Search Term OR Link>",
   expectedArgsTypes: ["STRING"],

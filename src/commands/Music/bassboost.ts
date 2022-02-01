@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { ICommand } from "wokcommands";
 import { lavalink } from "../../main";
+import { ICommand } from "wokcommands";
 
 export default {
   category: "Music",
-  description: "Stops the player!",
-  aliases: ["s"],
+  description: "B A S S",
+  aliases: ["bass"],
+  expectedArgs: "[level]",
+  expectedArgsTypes: ["STRING"],
   testOnly: true,
   slash: "both",
-  callback: async ({ member }) => {
+  callback: async ({ member, args }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {
       return "There is no music player for this guild";
@@ -36,8 +38,22 @@ export default {
       return "Your not in the same voice channel as the player!";
     }
 
-    player.destroy();
+    const levels: any = {
+      none: 0.0,
+      low: 0.1,
+      medium: 0.15,
+      high: 0.25,
+    };
 
-    return "The player has stopped";
+    let level = "none";
+
+    if (args.length && args[0].toLowerCase() in levels)
+      level = args[0].toLowerCase();
+
+    const bands = new Array(3)
+      .fill(null)
+      .map((_, i) => ({ band: i, gain: levels[level] }));
+
+    player.setEQ(...bands);
   },
 } as ICommand;

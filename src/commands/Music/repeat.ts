@@ -1,11 +1,11 @@
 // Copyright 2022 Northern Star
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,14 +16,14 @@ import { ICommand } from "wokcommands";
 import { lavalink } from "../../main";
 
 export default {
-description: 'Repeats the Queue',
-category: 'Music',
-aliases: ['rp'],
-testOnly: true,
-expectedArgs: '[Number of times to repeat]',
-expectedArgsTypes: ['NUMBER'],
-slash: 'both',
-callback: async({ member, args }) => {
+  description: "Repeats the Queue",
+  category: "Music",
+  aliases: ["rp"],
+  testOnly: true,
+  expectedArgs: "[Number of times to repeat]",
+  expectedArgsTypes: ["NUMBER"],
+  slash: "both",
+  callback: async ({ member, args }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {
       return "There is no music player for this guild";
@@ -39,14 +39,13 @@ callback: async({ member, args }) => {
       return "Your not in the same voice channel as the player!";
     }
     if (args.length && /queue/i.test(args[0])) {
-        player.setQueueRepeat(!player.queueRepeat);
-        const queueRepeat = player.queueRepeat ? "enabled" : "disabled";
-        return `${queueRepeat} queue repeat.`
-      }
-  
-      player.setTrackRepeat(!player.trackRepeat);
-      const trackRepeat = player.trackRepeat ? "enabled" : "disabled";
-      return `${trackRepeat} track repeat.`;
-    
-}
-} as ICommand
+      player.setQueueRepeat(!player.queueRepeat);
+      const queueRepeat = player.queueRepeat ? "enabled" : "disabled";
+      return `${queueRepeat} queue repeat.`;
+    }
+
+    player.setTrackRepeat(!player.trackRepeat);
+    const trackRepeat = player.trackRepeat ? "enabled" : "disabled";
+    return `${trackRepeat} track repeat.`;
+  },
+} as ICommand;

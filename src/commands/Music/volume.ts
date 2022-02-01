@@ -17,11 +17,13 @@ import { lavalink } from "../../main";
 
 export default {
   category: "Music",
-  description: "Stops the player!",
-  aliases: ["s"],
+  description: "Increases or decreases the volume of the player",
+  aliases: ["v"],
+  expectedArgs: "[Number]",
+  expectedArgsTypes: ["NUMBER"],
   testOnly: true,
   slash: "both",
-  callback: async ({ member }) => {
+  callback: async ({ member, args }) => {
     const player = lavalink.get(member.guild.id);
     if (!player) {
       return "There is no music player for this guild";
@@ -36,8 +38,12 @@ export default {
       return "Your not in the same voice channel as the player!";
     }
 
-    player.destroy();
+    const volume = Number(args[0]);
+    if (!volume || volume < 1 || volume > 100) {
+      return "you need to give me a volume between 1 and 100.";
+    }
 
-    return "The player has stopped";
+    player.setVolume(volume);
+    return `set the player volume to \`${volume}\`.`;
   },
 } as ICommand;
