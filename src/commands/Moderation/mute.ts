@@ -115,8 +115,9 @@ export default {
         expires,
         type: "mute",
       }).save();
+      console.info(`Process > Bot > The Process has made a PUT request to database for registering an Mute`)
     } catch (err) {
-      throw err;
+      console.trace(`Process > Bot > The process has encountered an error while executing ${__dirname}\n`,err)
     }
     let embed2 = new MessageEmbed()
       .setTitle("Moderation Action")

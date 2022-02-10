@@ -46,7 +46,7 @@ export default {
     try {
       if (player.state !== "CONNECTED") player.connect();
     } catch (e) {
-      console.error(`Expection occured at play.ts/54`, e);
+      console.trace(`Expection occured at play.ts/54\n`, e);
     }
 
     const search = args.join(" ");
@@ -55,7 +55,7 @@ export default {
       res = await player.search(search, member);
       if (res.loadType === "LOAD_FAILED") {
         if (!player.queue.current) player.destroy();
-        console.error(res.exception);
+        console.trace(res.exception);
       }
     } catch (e) {
       return;
@@ -117,7 +117,7 @@ export default {
             })!;
           }
         } catch (e) {
-          console.error(`Exception happended in play.ts/105`);
+          console.trace(`Exception happended in play.ts/105\n`, e);
           if (message) {
             return "Something went wrong";
           } else {
@@ -163,7 +163,7 @@ export default {
             interaction.followUp(`Queuing \` ${track.title} \` `);
           }
         } catch (e) {
-          console.error("Expection happended at play.ts/147", e);
+          console.trace("Expection happended at play.ts/147\n", e);
         }
     }
   },

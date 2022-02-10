@@ -42,19 +42,19 @@ export const lavalink = new Manager({
 });
 
 lavalink.on("nodeConnect", (node) => {
-  console.log(`Lavalink: ${node.options.identifier} has connected`);
+  console.info(`Lavalink > ${node.options.identifier} has connected`);
 });
 
 lavalink.on("nodeError", (node, err) => {
-  console.log(
-    `Node ${node.options.identifier} has encountered an error: ${err.message}`
+  console.info(
+    `Lavalink > Node ${node.options.identifier} has encountered an error: ${err.message}`
   );
 });
 
 client.on("ready", async () => {
   lavalink.init(client.user?.id);
-
-  client.user?.setActivity("Sequelize It!!!", { type: "WATCHING" });
+  console.info(`DiscordJS > Running instance for BOT ${client.user?.username}`);
+  client.user?.setActivity("For naughty kids", { type: "WATCHING" });
   new WOKCommands(client, {
     typeScript: true,
     commandDir: path.join(__dirname, "commands"),
