@@ -46,7 +46,7 @@ export default async (client: Client) => {
         .setDescription(
           `Last Checked <t:${Math.round(
             new Date().getTime() / 1000
-          )}:R> \n\` IP: mc.crackedminecraft.club\``
+          )}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: mc.crackedminecraft.club\``
         )
         .setTimestamp()
         .setColor(eu.ping ? `GREEN` : `RED`)
@@ -59,7 +59,7 @@ export default async (client: Client) => {
         .setDescription(
           `Last Checked <t:${Math.round(
             new Date().getTime() / 1000
-          )}:R> \n\` IP: ind.crackedminecraft.club\``
+          )}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: ind.crackedminecraft.club\``
         )
         .setTimestamp()
         .setColor(ap.ping ? `GREEN` : `RED`)

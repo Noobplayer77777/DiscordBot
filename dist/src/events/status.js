@@ -47,7 +47,7 @@ exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const embed = new discord_js_1.MessageEmbed()
                 .setTitle(`EU is ${eu.ping ? `Online 🟢` : `Offline 🔴`}`)
-                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n\` IP: mc.crackedminecraft.club\``)
+                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: mc.crackedminecraft.club\``)
                 .setTimestamp()
                 .setColor(eu.ping ? `GREEN` : `RED`)
                 .setFooter({
@@ -55,7 +55,7 @@ exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
             });
             const embel = new discord_js_1.MessageEmbed()
                 .setTitle(`IN is ${ap.ping ? `Online 🟢` : `Offline 🔴`}`)
-                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n\` IP: ind.crackedminecraft.club\``)
+                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: ind.crackedminecraft.club\``)
                 .setTimestamp()
                 .setColor(ap.ping ? `GREEN` : `RED`)
                 .setFooter({
