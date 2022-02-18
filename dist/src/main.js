@@ -54,17 +54,18 @@ exports.lavalink = new erela_js_1.Manager({
     },
 });
 exports.lavalink.on("nodeConnect", (node) => {
-    console.log(`Lavalink: ${node.options.identifier} has connected`);
+    console.info(`Lavalink > ${node.options.identifier} has connected`);
 });
 exports.lavalink.on("nodeError", (node, err) => {
-    console.log(`Node ${node.options.identifier} has encountered an error: ${err.message}`);
+    console.info(`Lavalink > Node ${node.options.identifier} has encountered an error: ${err.message}`);
 });
 client.on("ready", () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a, _b, _c;
     exports.lavalink.init((_a = client.user) === null || _a === void 0 ? void 0 : _a.id);
-    (_b = client.user) === null || _b === void 0 ? void 0 : _b.setActivity("Sequelize It!!!", { type: "WATCHING" });
+    console.info(`DiscordJS > Running instance for BOT ${(_b = client.user) === null || _b === void 0 ? void 0 : _b.username}`);
+    (_c = client.user) === null || _c === void 0 ? void 0 : _c.setActivity("For naughty kids", { type: "WATCHING" });
     new wokcommands_1.default(client, {
-        typeScript: true,
+        typeScript: false,
         commandDir: path_1.default.join(__dirname, "commands"),
         featureDir: path_1.default.join(__dirname, "events"),
         botOwners: [

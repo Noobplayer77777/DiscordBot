@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Client } from "discord.js";
+import { TextChannel, Client } from "discord.js";
 import WOKCommands from "wokcommands";
 import path from "path";
 import dotenv from "dotenv";
 import { Manager } from "erela.js";
+
 dotenv.config();
 
 const client = new Client({
@@ -56,7 +57,7 @@ client.on("ready", async () => {
   console.info(`DiscordJS > Running instance for BOT ${client.user?.username}`);
   client.user?.setActivity("For naughty kids", { type: "WATCHING" });
   new WOKCommands(client, {
-    typeScript: true,
+    typeScript: false,
     commandDir: path.join(__dirname, "commands"),
     featureDir: path.join(__dirname, "events"),
     botOwners: [
@@ -78,8 +79,14 @@ client.on("ready", async () => {
       "channelonly",
       "slash",
     ],
+    
   }).setDefaultPrefix("!");
+
+  
 });
+
+
+
 
 client.on("raw", (d) => lavalink.updateVoiceState(d));
 

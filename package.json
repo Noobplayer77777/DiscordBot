@@ -7,7 +7,7 @@
     "build": "tsc",
     "continue": "tsc --watch",
     "test": "ts-node test/test.ts",
-    "run": "node ./dist/src/main.js",
+    "dist": "node ./dist/src/main.js",
     "main": "ts-node src/main.ts"
   },
   "repository": {
@@ -29,21 +29,28 @@
     "@discordjs/builders": "^0.8.2",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@sapphire/snowflake": "^3.0.0",
-    "axios": "^0.24.0",
+    "axios": "^0.26.0",
     "chalk": "^5.0.0",
     "discord-api-types": "^0.26.0",
     "discord.js": "^13.5.1",
     "dotenv": "^10.0.0",
     "erela.js": "^2.3.3",
-    "mongoose": "^6.0.14",
-    "ping": "^0.4.1",
+    "ip": "^1.1.5",
+    "minecraft-pinger": "github:Grayson-code/node-minecraft-pinger",
+    "minecraft-server-ping": "^0.0.8",
+    "mongoose": "^6.2.2",
     "puppeteer": "^13.1.2",
+    "typescript": "^4.5.5",
     "wokcommands": "^1.5.3"
   },
   "devDependencies": {
+    "@types/ip": "^1.1.0",
     "@types/mongoose": "^5.11.97",
+    "@types/ping": "^0.4.1",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
-    "eslint": "^8.7.0"
+    "eslint": "^8.7.0",
+    "express": "^4.17.2",
+    "undici": "^4.14.1"
   }
 }

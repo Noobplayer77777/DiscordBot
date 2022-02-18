@@ -108,9 +108,10 @@ exports.default = {
                 expires,
                 type: "mute",
             }).save();
+            console.info(`Process > Bot > The Process has made a PUT request to database for registering an Mute`);
         }
         catch (err) {
-            throw err;
+            console.trace(`Process > Bot > The process has encountered an error while executing mute.ts \n`, err);
         }
         let embed2 = new discord_js_1.MessageEmbed()
             .setTitle("Moderation Action")

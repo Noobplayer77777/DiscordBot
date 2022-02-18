@@ -58,7 +58,7 @@ exports.default = {
                 player.connect();
         }
         catch (e) {
-            console.error(`Expection occured at play.ts/54`, e);
+            console.trace(`Expection occured at play.ts/54\n`, e);
         }
         const search = args.join(" ");
         let res;
@@ -67,7 +67,7 @@ exports.default = {
             if (res.loadType === "LOAD_FAILED") {
                 if (!player.queue.current)
                     player.destroy();
-                console.error(res.exception);
+                console.trace(res.exception);
             }
         }
         catch (e) {
@@ -123,7 +123,7 @@ exports.default = {
                     }
                 }
                 catch (e) {
-                    console.error(`Exception happended in play.ts/105`);
+                    console.trace(`Exception happended in play.ts/105\n`, e);
                     if (message) {
                         return "Something went wrong";
                     }
@@ -167,7 +167,7 @@ exports.default = {
                     }
                 }
                 catch (e) {
-                    console.error("Expection happended at play.ts/147", e);
+                    console.trace("Expection happended at play.ts/147\n", e);
                 }
         }
     }),
