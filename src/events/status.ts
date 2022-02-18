@@ -39,14 +39,14 @@ export default async (client: Client) => {
         channel.edit({ name: ` 🔴 Status` });
     }
 
-    const location = await axios.get(`http://ip-api.com/json/${ip.address()}`);
+    const location = await axios.get(`http://ip-api.com/json/`);
     try {
       const embed = new MessageEmbed()
         .setTitle(`EU is ${eu.ping ? `Online 🟢` : `Offline 🔴`}`)
         .setDescription(
           `Last Checked <t:${Math.round(
             new Date().getTime() / 1000
-          )}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: mc.crackedminecraft.club\``
+          )}:R> \n Getting ${eu.ping} ms ping from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: mc.crackedminecraft.club\``
         )
         .setTimestamp()
         .setColor(eu.ping ? `GREEN` : `RED`)
@@ -59,7 +59,7 @@ export default async (client: Client) => {
         .setDescription(
           `Last Checked <t:${Math.round(
             new Date().getTime() / 1000
-          )}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: ind.crackedminecraft.club\``
+          )}:R> \n Getting ${eu.ping} ms ping from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: ind.crackedminecraft.club\``
         )
         .setTimestamp()
         .setColor(ap.ping ? `GREEN` : `RED`)

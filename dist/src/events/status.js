@@ -29,7 +29,6 @@ exports.config = void 0;
 const axios_1 = __importDefault(require("axios"));
 const discord_js_1 = require("discord.js");
 const minecraft_pinger_1 = __importDefault(require("minecraft-pinger"));
-const ip_1 = __importDefault(require("ip"));
 exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
     const message = yield client.channels.cache.get("942036745711661096").messages.fetch("942050562688557086");
     const eu = yield minecraft_pinger_1.default.pingPromise("mc.crackedminecraft.club", 25565);
@@ -43,11 +42,11 @@ exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
             let channel = (yield client.channels.fetch(`942036745711661096`));
             channel.edit({ name: ` 🔴 Status` });
         }
-        const location = yield axios_1.default.get(`http://ip-api.com/json/${ip_1.default.address()}`);
+        const location = yield axios_1.default.get(`http://ip-api.com/json/`);
         try {
             const embed = new discord_js_1.MessageEmbed()
                 .setTitle(`EU is ${eu.ping ? `Online 🟢` : `Offline 🔴`}`)
-                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: mc.crackedminecraft.club\``)
+                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} ms ping from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: mc.crackedminecraft.club\``)
                 .setTimestamp()
                 .setColor(eu.ping ? `GREEN` : `RED`)
                 .setFooter({
@@ -55,7 +54,7 @@ exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
             });
             const embel = new discord_js_1.MessageEmbed()
                 .setTitle(`IN is ${ap.ping ? `Online 🟢` : `Offline 🔴`}`)
-                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: ind.crackedminecraft.club\``)
+                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} ms ping from ${location.data.country},${location.data.regionName},${location.data.city} \n\` IP: ind.crackedminecraft.club\``)
                 .setTimestamp()
                 .setColor(ap.ping ? `GREEN` : `RED`)
                 .setFooter({
