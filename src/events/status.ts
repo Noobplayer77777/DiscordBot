@@ -22,12 +22,18 @@ export default async (client: Client) => {
   const message = await (
     client.channels.cache.get("942036745711661096") as TextChannel
   ).messages.fetch("942050562688557086");
-
-  const eu = await pinger.pingPromise("mc.crackedminecraft.club", 25565);
-  const ap = await pinger.pingPromise("ind.crackedminecraft.club", 25565);
+   let eu:any
+   let ap:any
+  try {
+    eu = await pinger.pingPromise("mc.crackedminecraft.club", 25565);
+    ap = await pinger.pingPromise("ind.crackedminecraft.club", 25565);
+  } catch(e) {
+    console.error(e)
+    
+  }
 
   const status = async () => {
-    if (eu.ping || ap.ping) {
+    if (eu.ping & ap.ping) {
       let channel = (await client.channels.fetch(
         `942036745711661096`
       )) as TextChannel;

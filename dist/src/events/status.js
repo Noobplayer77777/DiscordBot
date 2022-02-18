@@ -31,10 +31,17 @@ const discord_js_1 = require("discord.js");
 const minecraft_pinger_1 = __importDefault(require("minecraft-pinger"));
 exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
     const message = yield client.channels.cache.get("942036745711661096").messages.fetch("942050562688557086");
-    const eu = yield minecraft_pinger_1.default.pingPromise("mc.crackedminecraft.club", 25565);
-    const ap = yield minecraft_pinger_1.default.pingPromise("ind.crackedminecraft.club", 25565);
+    let eu;
+    let ap;
+    try {
+        eu = yield minecraft_pinger_1.default.pingPromise("mc.crackedminecraft.club", 25565);
+        ap = yield minecraft_pinger_1.default.pingPromise("ind.crackedminecraft.club", 25565);
+    }
+    catch (e) {
+        console.error(e);
+    }
     const status = () => __awaiter(void 0, void 0, void 0, function* () {
-        if (eu.ping || ap.ping) {
+        if (eu.ping & ap.ping) {
             let channel = (yield client.channels.fetch(`942036745711661096`));
             channel.edit({ name: `🟢-Status` });
         }
