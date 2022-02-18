@@ -54,7 +54,7 @@ exports.default = (client) => __awaiter(void 0, void 0, void 0, function* () {
             });
             const embel = new discord_js_1.MessageEmbed()
                 .setTitle(`IN is ${ap.ping ? `Online 🟢` : `Offline 🔴`}`)
-                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${eu.ping} ms ping from ${location.data.country}, ${location.data.regionName}, ${location.data.city} \n\` IP: ind.crackedminecraft.club\``)
+                .setDescription(`Last Checked <t:${Math.round(new Date().getTime() / 1000)}:R> \n Getting ${ap.ping} ms ping from ${location.data.country}, ${location.data.regionName}, ${location.data.city} \n\` IP: ind.crackedminecraft.club\``)
                 .setTimestamp()
                 .setColor(ap.ping ? `GREEN` : `RED`)
                 .setFooter({
